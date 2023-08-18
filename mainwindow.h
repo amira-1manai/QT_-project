@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QDesktopServices>
 #include <QtCharts>
+#include "smtp.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,10 +40,19 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_pushButton_17_clicked();
+
+    void on_tableView_2_doubleClicked(const QModelIndex &index);
+
+    void on_pushButton_18_clicked();
+
 private:
     Ui::MainWindow *ui;
     Activite act;
     Eleve ect;
+     Smtp* smtp;
 
 };
 

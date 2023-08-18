@@ -10,6 +10,8 @@ public:
     Eleve();
 
     Eleve(int ,QString,QString,QString,QString,QDate,QString,QString,QString ,int);
+    Eleve(QString,QString,QString,QString,QDate,QString,QString,QString ,int);
+
     int getId();
     QString getNom();
     QString getPrenom();

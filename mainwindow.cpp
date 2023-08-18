@@ -15,14 +15,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    int id=ui->id->text().toInt();
+
     QString titre=ui->titre->text();
        QString lieu=ui->lieu->text();
        QDate date=ui->date->date();
           QString description=ui->description->toPlainText();
              QString type=ui->type->currentText();
                 QString responsable=ui->responsable->text();
-Activite a(id, date, titre, lieu, type, description, responsable);
+Activite a( date, titre, lieu, type, description, responsable);
 bool test=a.ajouter();
 if (test)
     {
@@ -66,7 +66,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    int id=ui->lineid->text().toInt();
+
     QString nom=ui->linenom->text();
        QString prenom=ui->lineprenom->text();
        QDate date=ui->date_n->date();
@@ -76,7 +76,7 @@ void MainWindow::on_pushButton_4_clicked()
                 int age=ui->lineage->text().toInt();
                 QString sexe=ui->combosexe->currentText();
                 QString niveau=ui->comboniveau->currentText();
-Eleve e(id,nom,prenom,niveau,classe,date,sexe,adresse,email ,age);
+Eleve e(nom,prenom,niveau,classe,date,sexe,adresse,email ,age);
 bool test=e.ajouter();
 if (test)
     {
@@ -85,6 +85,17 @@ ui->tableView_2->setModel(ect.afficher());
                      QObject ::tr("Ajout effectué\n"
                                   "click cancel to exit"),
                 QMessageBox:: Cancel);
+        smtp = new Smtp("manai.amira@esprit.tn" , "123JFT4219allah", "smtp.gmail.com",465);
+                connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+                QString msg="Inscription effectuée avec succés";
+
+                smtp->sendMail("manai.amira@esprit.tn",email,"Inscription validée",msg);
+
+                QMessageBox::information(nullptr, QObject::tr("SENT"),
+                                         QObject::tr("Email Sent Successfully.\n"
+                                                     "Click Cancel to exit."), QMessageBox::Cancel);
+
 
 }
     else
@@ -328,4 +339,115 @@ void MainWindow::on_pushButton_8_clicked()
 
                       chart->legend()->hide();
                       chartView->show();
+}
+
+void MainWindow::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    int id_modif;
+    id_modif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+    QString lieumodif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),2)).toString();
+    QDate datemodif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),1)).toDate();
+    QString type=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),3)).toString();
+    QString descmodif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),4)).toString();
+    QString respmodif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),5)).toString();
+    QString titre=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),6)).toString();
+    ui->titremodif->setText(titre);
+    ui->respmodif->setText(respmodif);
+    ui->lieumodif->setText(lieumodif);
+    ui->typemodif->setCurrentText(type);
+    ui->datemodif->setDate(datemodif);
+    ui->descmodif->setText(descmodif);
+
+
+
+
+
+
+}
+
+void MainWindow::on_pushButton_17_clicked()
+{
+    int id_modif;
+    id_modif=ui->tableView->model()->data(ui->tableView->model()->index(ui->tableView->currentIndex().row(),0)).toInt();
+    QString lieu=ui->lieumodif->text();
+    QString titre=ui->titremodif->text();
+    QString responsable=ui->respmodif->text();
+    QString type=ui->typemodif->currentText();
+    QDate date=ui->datemodif->date();
+    QString desc=ui->descmodif->toPlainText();
+
+    Activite a(id_modif,date, titre, lieu, type, desc, responsable);
+
+
+
+                bool test=a.modifier(id_modif);
+                if(test)
+                {
+                    QMessageBox::information(nullptr, QObject::tr("database is open"),
+                                QObject::tr("update successful.\n"
+                                            "Click Cancel to exit."), QMessageBox::Cancel);
+                    ui->tableView->setModel(act.afficher());
+
+                }
+                else
+                   { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                                QObject::tr("update failed.\n"
+                                            "Click Cancel to exit."), QMessageBox::Cancel); }
+
+}
+
+void MainWindow::on_tableView_2_doubleClicked(const QModelIndex &index)
+{
+    int id_modif;
+    id_modif=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),0)).toInt();
+    QString nom=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),1)).toString();
+    QString prenom=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),2)).toString();
+    QString niveau=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),3)).toString();
+    QString classe=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),4)).toString();
+    QDate date=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView->currentIndex().row(),5)).toDate();
+    QString sexe=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),6)).toString();
+    QString adresse=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),7)).toString();
+    QString email=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),8)).toString();
+    int age=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),9)).toInt();
+    ui->nommodif->setText(nom);
+    ui->prenommodif->setText(prenom);
+    ui->niveaumodif->setCurrentText(niveau);
+    ui->classemodif->setText(classe);
+    ui->date_e_modif->setDate(date);
+    ui->sexemodif->setCurrentText(sexe);
+    ui->adressemodif->setText(adresse);
+    ui->emailmodif->setText(email);
+    ui->agemodif->setText(QString::number(age));
+
+
+
+}
+
+void MainWindow::on_pushButton_18_clicked()
+{
+    int id_modif;
+    id_modif=ui->tableView_2->model()->data(ui->tableView_2->model()->index(ui->tableView_2->currentIndex().row(),0)).toInt();
+    QString nom=ui->nommodif->text();
+       QString prenom=ui->prenommodif->text();
+       QDate date=ui->date_e_modif->date();
+          QString classe=ui->classemodif->text();
+             QString adresse=ui->adressemodif->toPlainText();
+                QString email=ui->emailmodif->text();
+                int age=ui->agemodif->text().toInt();
+                QString sexe=ui->sexemodif->currentText();
+                QString niveau=ui->niveaumodif->currentText();
+Eleve e(id_modif,nom,prenom,niveau,classe,date,sexe,adresse,email ,age);
+bool test=e.modifier(id_modif);
+            if(test)
+            {
+                QMessageBox::information(nullptr, QObject::tr("database is open"),
+                            QObject::tr("update successful.\n"
+                                        "Click Cancel to exit."), QMessageBox::Cancel);
+                ui->tableView_2->setModel(ect.afficher());
+
+            }
+            else
+               { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                            QObject::tr("update failed.\n"
+                                        "Click Cancel to exit."), QMessageBox::Cancel); }
 }

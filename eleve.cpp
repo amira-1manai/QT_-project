@@ -28,6 +28,22 @@ Eleve::Eleve(int id,QString nom,QString prenom,QString niveau,QString classe,QDa
 
 
 }
+Eleve::Eleve(QString nom,QString prenom,QString niveau,QString classe,QDate date_naissance,QString sexe,QString adresse,QString email ,int age)
+{
+
+
+      this->nom=nom;
+    this->prenom=prenom;
+    this->niveau=niveau;
+    this->classe=classe;
+    this->date_naissance=date_naissance;
+    this->sexe=sexe;
+    this->adresse=adresse;
+    this->email=email;
+    this->age=age;
+
+
+}
 int Eleve::getId(){
     return id;
 }
@@ -61,10 +77,10 @@ int Eleve::getAge(){
 }
 bool Eleve::ajouter(){
     QSqlQuery query;
-    QString idE=QString::number(id);
+
     QString ages=QString::number(age);
-    query.prepare("insert into eleve(id,nom, prenom,niveau,classe,date_naissance,sexe,adresse,email,age) values (:id,:nom, :prenom,:niveau,:classe,:date_naissance,:sexe,:adresse,:email,:age)");
-    query.bindValue(":id",idE);
+    query.prepare("insert into eleve(nom, prenom,niveau,classe,date_naissance,sexe,adresse,email,age) values (:nom, :prenom,:niveau,:classe,:date_naissance,:sexe,:adresse,:email,:age)");
+
     query.bindValue(":nom",nom);
     query.bindValue(":prenom",prenom);
     query.bindValue(":niveau",niveau);

@@ -26,6 +26,19 @@ Activite::Activite(int ida,QDate Datea,QString titre,QString lieu,QString type,Q
 
 
 }
+Activite::Activite(QDate Datea,QString titre,QString lieu,QString type,QString description,QString responsable)
+{
+
+
+    this->date=Datea;
+    this->titre=titre;
+    this->lieu=lieu;
+    this->type=type;
+    this->description=description;
+    this->responsable=responsable;
+
+
+}
 int Activite::getId(){
     return id;
 }
@@ -51,7 +64,7 @@ QString Activite::getResponsable(){
 bool Activite::ajouter(){
     QSqlQuery query;
     QString idS=QString::number(id);
-    query.prepare("insert into activite(id,datee,lieu,type,description,responsable,titre) values (:id,:date,:lieu,:type,:description,:responsable,:titre)");
+    query.prepare("insert into activite(datee,lieu,type,description,responsable,titre) values (:date,:lieu,:type,:description,:responsable,:titre)");
     query.bindValue(":id",idS);
     query.bindValue(":date",date);
     query.bindValue(":lieu",lieu);
@@ -87,7 +100,7 @@ bool Activite::modifier(int id)
 {
     QSqlQuery query;
     QString res=QString::number(id);
-    query.prepare("UPDATE Activite SET titre=:titre,description=:description,type=:type,lieu=:lieu,datee=:date,responsable=:responsable WHERE id=:id");
+    query.prepare("UPDATE Activite SET titre=:titre,description=:description,type=:type,lieu=:lieu,datee=:datee,responsable=:responsable WHERE id=:id");
     query.bindValue(":titre",titre);
     query.bindValue(":description",description);
     query.bindValue(":type",type);

@@ -10,6 +10,7 @@ class Activite
 public:
     Activite();
     Activite(int ,QDate,QString,QString,QString,QString,QString);
+    Activite(QDate,QString,QString,QString,QString,QString);
     int getId();
     QDate getDate();
     QString getTitre();

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql charts
+QT       += core gui sql charts network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,14 +30,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    participation.cpp
+    participation.cpp \
+    smtp.cpp
 
 HEADERS += \
     activite.h \
     eleve.h \
         mainwindow.h \
     connection.h \
-    participation.h
+    participation.h \
+    smtp.h
 
 FORMS += \
         mainwindow.ui
@@ -46,3 +48,9 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    ../../OneDrive/Bureau/libeay32.dll \
+    ../../OneDrive/Bureau/ssleay32.dll \
+    libeay32.dll \
+    ssleay32.dll
