@@ -9,12 +9,12 @@ class Participation
 public:
     Participation();
 
-    Participation(int ,int,int,QString,int);
+    Participation(int,int,QDateTime,QString);
     int getId();
     int getId_Eleve();
     int getId_Activite();
-    QString getMessage();
-    int getEtat();
+    QDateTime getDate();
+    QString getEtat();
 
     bool ajouter();
     bool supprimer(int);
@@ -22,8 +22,9 @@ public:
     QSqlQueryModel * afficher();
 private:
 
-    int id,id_eleve,id_activite,etat;
+    int id,id_eleve,id_activite;
+    QString etat;
 
-  QString message;
+  QDateTime date;
 };
 #endif // PARTICIPATION_H

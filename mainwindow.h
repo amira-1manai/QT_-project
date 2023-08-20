@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include"Activite.h"
+#include"activite.h"
 #include"eleve.h"
 #include<QMessageBox>
 #include<QDebug>
@@ -8,6 +8,16 @@
 #include <QDesktopServices>
 #include <QtCharts>
 #include "smtp.h"
+#include <QtPrintSupport/QPrinter>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QPrinter>
+#include <QPrinterInfo>
+#include <QPrintDialog>
+#include <QPainter>
+#include <QPdfWriter>
+#include <QDesktopServices>
+#include"participation.h"
 
 namespace Ui {
 class MainWindow;
@@ -48,11 +58,24 @@ private slots:
 
     void on_pushButton_18_clicked();
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_11_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_12_clicked();
+
+    void on_pushButton_13_clicked();
+
 private:
     Ui::MainWindow *ui;
     Activite act;
     Eleve ect;
      Smtp* smtp;
+     Participation ptmp;
 
 };
 

@@ -217,3 +217,24 @@ QSqlQueryModel * Eleve::triParNiveau(QString tst)
     model->setHeaderData(9, Qt::Horizontal, QObject::tr("age"));
 return model;
 }
+
+bool Eleve::ajouter_mod(int id,QString a,QDateTime d)
+{
+    QSqlQuery query;
+    QString res = QString::number(id);
+    //QString res1=d.toString();
+    query.prepare("INSERT INTO historique(id_eleve,type,date_mod)""VALUES (:id_a,:type,:date_mod)");
+    query.bindValue(":id_a",id);
+    query.bindValue(":type",a);
+    query.bindValue(":date_mod",d);
+    return query.exec();
+}
+QSqlQueryModel * Eleve::afficher_mod()
+{
+    QSqlQueryModel *model=new QSqlQueryModel();
+    model->setQuery("SELECT * FROM historique");
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("ID Eleve"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("type"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("Date et Temps"));
+    return model;
+}

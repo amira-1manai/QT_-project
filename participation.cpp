@@ -5,18 +5,18 @@ Participation::Participation()
     id =0;
     id_eleve=0;
     id_activite=0;
-    message="";
-    etat=0;
+
+    etat="";
 
 
 }
-Participation::Participation(int id,int id_eleve,int id_activite,QString message,int etat)
+Participation::Participation(int id_eleve,int id_activite,QDateTime date,QString etat)
 {
 
-    this->id=id;
+
     this->id_eleve=id_eleve;
     this->id_activite=id_activite;
-    this->message=message;
+    this->date=date;
     this->etat=etat;
 
 
@@ -32,20 +32,21 @@ int Participation::getId_Eleve(){
 int Participation::getId_Activite(){
     return id_activite;
 }
-QString Participation::getMessage(){
-    return message;
+QDateTime Participation::getDate(){
+    return date;
 }
-int Participation::getEtat(){
+QString Participation::getEtat(){
     return etat;
 }
 bool Participation::ajouter(){
     QSqlQuery query;
-    QString idP=QString::number(id);
-    query.prepare("insert into participation(id,id_eleve,id_activite,message,etat) values (:id,:id_eleve,:id_activite,:message,:etat)");
-    query.bindValue(":id",idP);
-    query.bindValue(":id_eleve",id_eleve);
-    query.bindValue(":id_activite",id_activite);
-    query.bindValue(":message",message);
+    QString idE=QString::number(id_eleve);
+    QString idA=QString::number(id_activite);
+    query.prepare("insert into participation(id_eleve,id_activite,dat,etat) values (:id_eleve,:id_activite,:dat,:etat)");
+
+    query.bindValue(":id_eleve",idE);
+    query.bindValue(":id_activite",idA);
+    query.bindValue(":dat",date);
     query.bindValue(":etat",etat);
 
       return query.exec();
@@ -58,7 +59,7 @@ QSqlQueryModel* Participation::afficher()
           model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
           model->setHeaderData(1, Qt::Horizontal, QObject::tr("id_eleve"));
           model->setHeaderData(2, Qt::Horizontal, QObject::tr("id_activite"));
-          model->setHeaderData(3, Qt::Horizontal, QObject::tr("message"));
+          model->setHeaderData(3, Qt::Horizontal, QObject::tr("dat"));
           model->setHeaderData(4, Qt::Horizontal, QObject::tr("etat"));
 
     return model;
@@ -75,11 +76,9 @@ bool Participation::modifier(int id)
 {
     QSqlQuery query;
     QString res=QString::number(id);
-    query.prepare("UPDATE Participation SET id_eleve=:id_eleve,id_activite=:id_activite,message=:message,etat=:etat WHERE id=:id");
-    query.bindValue(":id_eleve",id_eleve);
-    query.bindValue(":id_activite",id_activite);
-    query.bindValue(":message",message);
-    query.bindValue(":etat",etat);
+    query.prepare("UPDATE Participation SET etat='approuvée'  WHERE id=:id");
+
+
     query.bindValue(":id",res);
     return query.exec();
 }

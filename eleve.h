@@ -31,6 +31,8 @@ public:
     QSqlQueryModel * triParAge(QString tst);
     QSqlQueryModel * triParNiveau(QString tst);
     QSqlQueryModel * triParDate(QString tst);
+    bool ajouter_mod(int,QString,QDateTime);
+    QSqlQueryModel * afficher_mod();
 private:
     int id,age;
     QDate date_naissance;
