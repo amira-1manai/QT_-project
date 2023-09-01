@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -8,6 +9,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->tableView_4->setModel(ect.afficher());
     ui->tableView_5->setModel(act.afficher());
+    ui->tableView->setModel(act.afficher());
+    ui->tableView_3->setModel(ect.afficher_mod());
+    ui->tableView_2->setModel(ect.afficher());
+    ui->tableView_4->setModel(ect.afficher());
+    ui->tableView_5->setModel(act.afficher());
+    ui->tableView_6->setModel(ptmp.afficher());
+    ui->tableView_7->setModel(act.afficher());
+    ui->tableView_8->setModel(ntmp.afficher());
+    ui->SliderNote->setMinimum(0);
+    ui->SliderNote->setMaximum(5);
+
 }
 
 MainWindow::~MainWindow()
@@ -164,8 +176,8 @@ ui->tableView_2->setModel(ect.afficher());
                      QObject ::tr("Ajout effectué\n"
                                   "click cancel to exit"),
                 QMessageBox:: Cancel);
-        smtp = new Smtp("firas.eljary@esprit.tn" , "espritmain47", "smtp.gmail.com",465);
-                connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+         smtp = new Smtp("firas.eljary@esprit.tn" , "espritmain47", "smtp.gmail.com",465);
+
 
                 QString msg="Inscription effectuée avec succés";
 
@@ -174,6 +186,10 @@ ui->tableView_2->setModel(ect.afficher());
                 QMessageBox::information(nullptr, QObject::tr("SENT"),
                                          QObject::tr("Email Sent Successfully.\n"
                                                      "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+
+
                 QSqlQueryModel *model = new QSqlQueryModel();
                 model=ect.afficher();
                 int lastRowIndex = model->rowCount() - 1;  // Get index of the last row
@@ -682,4 +698,29 @@ void MainWindow::on_pushButton_13_clicked()
                                         QObject::tr("delete failed.\n"
                                                     "Click Cancel to exit."), QMessageBox::Cancel);
     }
+}
+
+void MainWindow::on_pushButton_14_clicked()
+{
+   int id_del=ui->tableView_7->model()->data(ui->tableView_7->model()->index(ui->tableView_7->currentIndex().row(),0)).toInt();
+  float note = ui->SliderNote->value();
+  Note n (note,id_del,QDateTime::currentDateTime());
+  qDebug() <<note;
+  bool test = n.ajouter();
+  if(test)
+                          {
+                              QMessageBox::information(nullptr, QObject::tr("database is open"),
+                                          QObject::tr("Note Added.\n"
+                                                      "Click Cancel to exit."), QMessageBox::Cancel);
+
+                              ui->tableView_8->setModel(ntmp.afficher());
+
+                          }
+                          else
+                             { QMessageBox::critical(nullptr, QObject::tr("database is not open"),
+                                          QObject::tr(" failed.\n"
+                                                      "Click Cancel to exit."), QMessageBox::Cancel);
+      }
+
+
 }

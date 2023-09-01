@@ -130,6 +130,7 @@ QSqlQueryModel * Activite::TriParTitre(QString tst)
 {
     QSqlQueryModel *model=new QSqlQueryModel();
     model->setQuery("SELECT * FROM Activite ORDER BY titre  "+tst);
+
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("datee"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("lieu"));

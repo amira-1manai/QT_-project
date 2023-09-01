@@ -18,6 +18,8 @@
 #include <QPdfWriter>
 #include <QDesktopServices>
 #include"participation.h"
+#include <curl/curl.h>
+#include"note.h"
 
 namespace Ui {
 class MainWindow;
@@ -70,13 +72,17 @@ private slots:
 
     void on_pushButton_13_clicked();
 
+
+
+    void on_pushButton_14_clicked();
+
 private:
     Ui::MainWindow *ui;
     Activite act;
     Eleve ect;
      Smtp* smtp;
      Participation ptmp;
-
+     Note ntmp;
 };
 
 #endif // MAINWINDOW_H

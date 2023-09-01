@@ -5,9 +5,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+
     Connection c;
+
     bool test=c.createconnect();
+    MainWindow w;
     QFile file("C:/Users/AMIRA/Downloads/Atelier_Connexion/Combinear.qss");
                       file.open(QFile::ReadOnly);
 
